@@ -7,10 +7,11 @@
 
 class OpenGLShaderProgram :public IShaderProgram
 {
-public:
+	friend class OpenGLRender;
+private:
 	OpenGLShaderProgram();
 	~OpenGLShaderProgram();
-
+public:
 	// Inherited via IShaderProgram
 	void AttachShader(IShader * shader) override;
 	bool Link() override;

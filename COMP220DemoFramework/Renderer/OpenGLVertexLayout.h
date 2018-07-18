@@ -8,10 +8,11 @@
 
 class OpenGLVertexLayout :public IVertexLayout
 {
-public:
+	friend class OpenGLRender;
+private:
 	OpenGLVertexLayout();
 	~OpenGLVertexLayout();
-
+public:
 	void CreateFromDescription(VertexDesc * desc, int numberOfElements);
 
 	void BindVertexBuffer(IVertexBuffer * buffer);

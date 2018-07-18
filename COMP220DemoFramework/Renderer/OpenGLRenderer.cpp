@@ -1,5 +1,8 @@
 #include "OpenGLRenderer.h"
 #include "OpenGLVertexBuffer.h"
+#include "OpenGLVertexLayout.h"
+#include "OpenGLShader.h"
+#include "OpenGLShaderProgram.h"
 
 #include <SDL_opengl.h>
 #include <SDL.h>
@@ -121,4 +124,29 @@ IVertexBuffer * OpenGLRender::CreateVertexBuffer(int size)
 	OpenGLVertexBuffer * vertexBuffer = new OpenGLVertexBuffer();
 	vertexBuffer->Create(size);
 	return vertexBuffer;
+}
+
+void OpenGLRender::Destory()
+{
+}
+
+IVertexLayout * OpenGLRender::CreateVertexLayout(VertexDesc * desc, int numberOfElements)
+{
+	OpenGLVertexLayout * vertexLayout = new OpenGLVertexLayout();
+	vertexLayout->CreateFromDescription(desc, numberOfElements);
+	return vertexLayout;
+}
+
+IShader * OpenGLRender::CreateShader(ShaderType type)
+{
+	OpenGLShader * shader = new OpenGLShader();
+	shader->Create(type);
+	return shader;
+}
+
+IShaderProgram * OpenGLRender::CreateShaderProgram()
+{
+	OpenGLShaderProgram * shaderProgram = new OpenGLShaderProgram();
+	shaderProgram->Create();
+	return shaderProgram;
 }

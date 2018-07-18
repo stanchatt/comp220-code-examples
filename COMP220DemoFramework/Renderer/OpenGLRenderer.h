@@ -23,7 +23,7 @@ public:
 
 	//Create the Renderer
 	bool Create(RendererDesc &desc, SDL_Window * window) override;
-
+	void Destory() override;
 	//Clear the current buffer
 	void Clear(float r, float g, float b) override;
 	//Begin Renderering
@@ -33,7 +33,12 @@ public:
 
 	IVertexBuffer * CreateAndFillVertexBuffer(void ** data, int size) override;
 	IVertexBuffer * CreateVertexBuffer(int size) override;
+	IVertexLayout * CreateVertexLayout(VertexDesc * desc, int numberOfElements) override;
+	IShader * CreateShader(ShaderType type) override;
+	IShaderProgram * CreateShaderProgram() override;
 private:
 	SDL_GLContext Context;
 	SDL_Window * Window;
+
+
 };

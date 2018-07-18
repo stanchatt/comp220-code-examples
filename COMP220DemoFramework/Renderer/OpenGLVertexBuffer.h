@@ -7,12 +7,13 @@
 //Concrete class for an OpenGL Vertex Buffer
 class OpenGLVertexBuffer :public IVertexBuffer
 {
-public:
+	friend class OpenGLRender;
+private:
 	//Consstructor
 	OpenGLVertexBuffer();
 	//Deconstructor
 	~OpenGLVertexBuffer();
-
+public:
 	//Create and Fill VBO
 	bool CreateAndFill(void ** data, int size) override;
 	//Create buffer

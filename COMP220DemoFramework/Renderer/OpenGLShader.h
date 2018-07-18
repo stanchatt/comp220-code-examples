@@ -6,10 +6,11 @@
 
 class OpenGLShader :public IShader
 {
-public:
+	friend class OpenGLRender;
+private:
 	OpenGLShader();
 	~OpenGLShader();
-
+public:
 	// Inherited via IShader
 	bool Create(ShaderType type) override;
 	bool LoadFromMemory(const char * data) override;
