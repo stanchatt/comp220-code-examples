@@ -149,7 +149,7 @@ void BaseGame::Render()
 	ImGui::SetNextWindowSize(ImVec2(WindowDescription.WindowWidth, WindowDescription.WindowHeight));
 	ImGui::SetNextWindowBgAlpha(0.0f);
 	ImGui::Begin("Debug", &show, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoBringToFrontOnFocus);
-	ImGui::Text("%.2f",(1.0f/MainTimer.GetDeltaTime()));
+	ImGui::Text("FPS: %.2f",(1.0f/MainTimer.GetDeltaTime()));
 	ImGui::End();
 
 	ImGui::Render();
