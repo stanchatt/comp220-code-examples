@@ -16,6 +16,7 @@
 
 int main(int argc, char ** argsv)
 {
+
 	//Initialises the SDL Library, passing in SDL_INIT_VIDEO to only initialise the video subsystems
 	//https://wiki.libsdl.org/SDL_Init
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -84,6 +85,7 @@ int main(int argc, char ** argsv)
 	glm::vec3 position = glm::vec3(0.0f, -8.0f, -2.0f);
 	glm::vec3 rotation = glm::vec3(0.0f, 0.0f, 0.0f);
 	glm::vec3 scale = glm::vec3(1.0f, 1.0f, 1.0f);
+	
 
 	//calculate the translation, rotation and scale matrices using the above vectores
 	glm::mat4 translationMatrix = glm::translate(position);
@@ -99,9 +101,14 @@ int main(int argc, char ** argsv)
 	glm::vec3 cameraPosition = glm::vec3(0.0f, 0.0f, 20.0f);
 	glm::vec3 cameraLook = glm::vec3(0.0f, 0.0f, 0.0f);
 	glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+	glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+
+	//Set up float for camera speed
+	float walkSpeed = 0.05f;
+
 
 	//Calculate the view matrix
-	glm::mat4 viewMatrix = glm::lookAt(cameraPosition, cameraLook, cameraUp);
+	glm::mat4 viewMatrix = glm::lookAt(cameraPosition, cameraPosition + cameraFront, cameraUp);
 	//Calculate our perspective matrix
 	glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), (float)800 / (float)640, 0.1f, 100.0f);
 
@@ -161,25 +168,30 @@ int main(int argc, char ** argsv)
 				//Check the actual key code of the key that has been pressed
 				switch (ev.key.keysym.sym)
 				{
-					//float walkspeed = 0.05f;
+					//float walkspeed = 0.11;
 					//Escape key
 				case SDLK_ESCAPE:
 					running = false;
 					break;
 				case SDLK_a:
-					rotation.y -= 0.1f;
+					cameraPosition -= glm::normalize(glm::cross(cameraFront, cameraUp)) * walkSpeed;
+					//rotation.y -= 0.1f;
 					break;
 				case SDLK_d:
-					rotation.y += 0.1f;
+					cameraPosition += glm::normalize(glm::cross(cameraFront, cameraUp)) * walkSpeed;
+					//rotation.y += 0.1f;
 					break;
 				case SDLK_w:
-					rotation.x -= 0.1f;
+					cameraPosition += walkSpeed * cameraFront;
+					//rotation.x -= 0.1f;
 					break;
 				case SDLK_s:
-					rotation.x += 0.1f;
+					cameraPosition -= walkSpeed * cameraFront;
+					//rotation.x += 0.1f;
 					break;
 				}
-			}
+				viewMatrix = glm::lookAt(cameraPosition, cameraPosition + cameraFront, cameraUp);
+				}
 		}
 
 		//update
@@ -241,3 +253,4 @@ int main(int argc, char ** argsv)
 
 	return 0;
 }
+
