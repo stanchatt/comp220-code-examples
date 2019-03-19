@@ -115,7 +115,7 @@ int main(int argc, char ** argsv)
 
 	//Material Properties
 	glm::vec4 ambientMaterialColour = glm::vec4(0.5f, 0.0f, 0.0f, 1.0f);
-	glm::vec4 diffuseMaterialColour = glm::vec4(0.8f, 0.0f, 0.0f, 1.0f);
+	glm::vec4 diffuseMaterialColour = glm::vec4(0.8f, 0.8f, 0.8f, 1.0f);
 	glm::vec4 specularMaterialColour= glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 	float specularMaterialPower = 25.0f;
 
@@ -161,6 +161,7 @@ int main(int argc, char ** argsv)
 				//Check the actual key code of the key that has been pressed
 				switch (ev.key.keysym.sym)
 				{
+					//float walkspeed = 0.05f;
 					//Escape key
 				case SDLK_ESCAPE:
 					running = false;

@@ -28,7 +28,7 @@ void main()
 	//Specular
 	vec3 halfWay=normalize(lightDirection+viewDirection);
 	float nDoth=pow(dot(vertexNormalsOut,halfWay),specularMaterialPower);
-
+	vec4 texturecolour=texture2D(baseTexture,vertexTextureCoordOut);
 	
-	colour=(ambientLightColour*ambientMaterialColour)+(diffuseLightColour*nDotl*diffuseMaterialColour)+(specularLightColour*nDoth*specularMaterialColour);
+	colour=(ambientLightColour*ambientMaterialColour)+(diffuseLightColour*nDotl*texturecolour)+(specularLightColour*nDoth*specularMaterialColour);
 }
