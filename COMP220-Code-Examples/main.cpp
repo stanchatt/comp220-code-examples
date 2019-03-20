@@ -98,13 +98,22 @@ int main(int argc, char ** argsv)
 	glm::mat4 modelMatrix = translationMatrix * rotationMatrix*scaleMatrix;
 
 	//Set up vectors for our camera position
-	glm::vec3 cameraPosition = glm::vec3(0.0f, 0.0f, 20.0f);
+	glm::vec3 cameraPosition = glm::vec3(0.0f, 0.0f, 3.0f);
 	glm::vec3 cameraLook = glm::vec3(0.0f, 0.0f, 0.0f);
 	glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 	glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 
+	//get mouse coords
+	float lastX = 400, lastY = 320;
+
+	//Mouse yaw and pitch
+	float yaw = 0;
+	float pitch = 0;
+
+	glm::mat4 view;
+
 	//Set up float for camera speed
-	float walkSpeed = 0.05f;
+	float walkSpeed = 0.5f;
 
 
 	//Calculate the view matrix
@@ -163,6 +172,44 @@ int main(int argc, char ** argsv)
 			case SDL_QUIT:
 				running = false;
 				break;
+			case SDL_MOUSEMOTION:
+			{
+				//Calculate mouse X and Y position
+				float x = ev.motion.x;
+				float y = ev.motion.y;
+				float xoffset = x - lastX;
+				float yoffset = lastY - y; // reversed 
+				lastX = x;
+				lastY = y;
+				//Sensitivity
+				float sensitivity = 0.05f;
+				xoffset *= sensitivity;
+				yoffset *= sensitivity;
+
+				//yaw and pitch offsets
+				yaw += xoffset;
+				pitch += yoffset;
+
+				
+				if (pitch > 89.0f)
+					pitch = 89.0f;
+				if (pitch < -89.0f)
+					pitch = -89.0f;
+
+				//Calculating look direction from yaw and pitch
+				glm::vec3 front;
+				front.x = cos(glm::radians(pitch)) * cos(glm::radians(yaw));
+				front.y = sin(glm::radians(pitch));
+				front.z = cos(glm::radians(pitch)) * sin(glm::radians(yaw));
+				cameraFront = glm::normalize(front);
+
+				std::cout << "Mouse Position " << x << " " << y << std::endl;
+				break;
+
+
+			}
+
+
 				//KEYDOWN Message, called when a key has been pressed down
 			case SDL_KEYDOWN:
 				//Check the actual key code of the key that has been pressed
@@ -190,9 +237,11 @@ int main(int argc, char ** argsv)
 					//rotation.x += 0.1f;
 					break;
 				}
-				viewMatrix = glm::lookAt(cameraPosition, cameraPosition + cameraFront, cameraUp);
+				
 				}
 		}
+
+		viewMatrix = glm::lookAt(cameraPosition, cameraPosition + cameraFront, cameraUp);
 
 		//update
 		translationMatrix = glm::translate(position);
